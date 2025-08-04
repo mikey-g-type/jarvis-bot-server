@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: jarvis-flask-bot
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: gunicorn flask_bot:app
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: jarvis-bot-db
+          property: connectionString
