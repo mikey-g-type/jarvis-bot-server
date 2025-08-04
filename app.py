@@ -1,6 +1,16 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
+from datetime import datetime
+import pytz
 
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Jarvis Bot Server is up and running!"
+
+@app.route("/favicon.ico")
+def favicon():
+    return make_response('', 204)
 
 @app.route("/reason", methods=["POST"])
 def reason():
@@ -13,8 +23,6 @@ def reason():
     elif "who are you" in command:
         response = "I am your personal AI assistant, built by Mike."
     elif "time in kenya" in command:
-        from datetime import datetime
-        import pytz
         kenya_time = datetime.now(pytz.timezone('Africa/Nairobi')).strftime("%I:%M %p")
         response = f"The current time in Kenya is {kenya_time}."
     else:
