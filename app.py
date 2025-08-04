@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, send_from_directory
 from datetime import datetime
 import pytz
+import os
 
 app = Flask(__name__)
 
@@ -10,7 +11,11 @@ def home():
 
 @app.route("/favicon.ico")
 def favicon():
-    return make_response('', 204)
+    return send_from_directory(
+        os.path.join(app.root_path, "static"),
+        "favicon.ico",
+        mimetype="image/vnd.microsoft.icon"
+    )
 
 @app.route("/reason", methods=["POST"])
 def reason():
